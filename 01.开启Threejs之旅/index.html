@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>认识Threejs</title>
+    <link rel="stylesheet" href="../css/reset.css">
+</head>
+<body>
+
+</body>
+<script src="../js/three.min.js"></script>
+<script>
+    <!-- 三大组建:场景/相机/渲染器 -->
+    // 场景
+    var scene = new THREE.Scene();
+    // 相机
+    var camera = new THREE.PerspectiveCamera(75, window.innerWidth/window.innerHeight, 0.1, 1000);
+    // 渲染器
+    var renderer = new THREE.WebGLRenderer();
+    // 设置渲染器的大小
+    renderer.setSize(window.innerWidth, window.innerHeight);
+    // 插入
+    document.body.appendChild(renderer.domElement);
+    // 创建一个几何体
+    var geometry = new THREE.CubeGeometry(1,1,1);
+    // 材质
+    var material = new THREE.MeshBasicMaterial({color: 0x00ff00});
+    //
+    var cube = new THREE.Mesh(geometry, material);
+    scene.add(cube);
+    camera.position.z = 5;
+    function render() {
+        // 循环渲染
+        requestAnimationFrame(render);
+        cube.rotation.x += 0.1;
+        cube.rotation.y += 0.1;
+        renderer.render(scene, camera);
+    }
+    render();
+</script>
+</html>
