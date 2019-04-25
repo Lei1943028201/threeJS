@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>让场景动起来</title>
+    <title>环境光和平行光</title>
     <link rel="stylesheet" href="../css/reset.css">
     <link rel="stylesheet" href="../css/common.css">
     <style type="text/css">
@@ -22,6 +22,7 @@
 <script src="../js/three.min.js"></script>
 <script>
     var renderer;
+    var width,height
     function initThree() {
         width = document.getElementById('canvas-frame').clientWidth;
         height = document.getElementById('canvas-frame').clientHeight;
@@ -36,7 +37,7 @@
     var camera;
     function initCamera() {
         camera = new THREE.PerspectiveCamera(45, width / height, 1, 10000);
-        camera.position.x = 0;
+        camera.position.x = 600;
         camera.position.y = 0;
         camera.position.z = 600;
         camera.up.x = 0;
@@ -56,23 +57,55 @@
 
     var light;
     function initLight() {
-        light = new THREE.AmbientLight(0xFF0000);
+        // 环境光
+        light = new THREE.AmbientLight(0x00FF00);
         light.position.set(100, 100, 200);
         scene.add(light);
-
-        light = new THREE.PointLight(0x00FF00);
-        light.position.set(0, 0,300);
+        // 平行光
+        light = new THREE.DirectionalLight(0xFF0000);
+        light.position.set(0, 0, 1);
+        scene.add(light);
+        // 点光源
+        light = new THREE.PointLight(0x0000FF);
+        light.position.set(0, 0, 50);
         scene.add(light);
     }
 
+    // A start
     var cube;
     function initObject() {
-        var geometry = new THREE.CylinderGeometry( 70,100,200);
+        var geometry = new THREE.CubeGeometry( 200, 100, 50,4,4);
         var material = new THREE.MeshLambertMaterial( { color:0xFFFFFF} );
         var mesh = new THREE.Mesh( geometry,material);
-        mesh.position = new THREE.Vector3(0,0,0);
+        mesh.position.set(0,0,0);
         scene.add(mesh);
+
+        var geometry2 = new THREE.CubeGeometry( 200, 100, 50,4,4);
+        var material2 = new THREE.MeshLambertMaterial( { color:0xFFFFFF} );
+        var mesh2 = new THREE.Mesh( geometry2,material2);
+        mesh2.position.set(-300,0,0);
+        scene.add(mesh2);
+
+        var geometry3 = new THREE.CubeGeometry( 200, 100, 50,4,4);
+        var material3 = new THREE.MeshLambertMaterial( { color:0xFFFFFF} );
+        var mesh3 = new THREE.Mesh( geometry3,material3);
+        mesh3.position.set(0,-150,0);
+        scene.add(mesh3);
+
+        var mesh4 = new THREE.Mesh( geometry3,material3);
+        mesh4.position.set(0,150,0);
+        scene.add(mesh4);
+
+        var mesh5 = new THREE.Mesh( geometry3,material3);
+        mesh5.position.set(300,0,0);
+        scene.add(mesh5);
+
+        var mesh6 = new THREE.Mesh( geometry3,material3);
+        mesh6.position.set(0,0,-100);
+        scene.add(mesh6);
+
     }
+    // A end
 
     function threeStart() {
         initThree();
@@ -80,24 +113,8 @@
         initScene();
         initLight();
         initObject();
-        animation();
-
-    }
-    function animation() {
-        changeFov();
+        renderer.clear();
         renderer.render(scene, camera);
-        requestAnimationFrame(animation);
-    }
-
-    function setCameraFov(fov) {
-        camera.fov = fov;
-        camera.updateProjectionMatrix();
-    }
-
-    function changeFov() {
-        var txtFov = document.getElementById("txtFov").value;
-        var val = parseFloat(txtFov);
-        setCameraFov(val);
     }
     threeStart()
 </script>
