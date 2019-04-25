@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <link rel="stylesheet" href="../css/reset.css">
+    <link rel="stylesheet" href="../css/common.css">
+    <style>
+        body{
+            padding: 100px;
+        }
+        #main{
+            margin: 0 auto;
+            width: 500px;
+            height: 500px;
+            background: #eee;
+        }
+        .fd-item{
+            position: relative;
+            width: 100%;
+            height: 100%;
+            border-radius: 50%;
+            border: 1px solid #000000;
+        }
+        .fd-cal{
+            position: absolute;
+            top: 225px;
+            left: 225px;
+            display: inline-block;
+            width: 50px;
+            height: 50px;
+            background: pink;
+            border-radius: 50%;
+            line-height: 50px;
+            text-align: center;
+            color: #fff;
+        }
+    </style>
+</head>
+<body>
+    <div id="main">
+        <div class="fd-item">
+            <span class="fd-cal">1</span>
+            <span class="fd-cal">2</span>
+            <span class="fd-cal">3</span>
+            <span class="fd-cal">4</span>
+        </div>
+    </div>
+</body>
+<script src="https://cdn.bootcss.com/jquery/1.12.4/jquery.js"></script>
+<script>
+    var $cal = $('.fd-cal')
+
+    for(var i=0; i<$cal.length; i++){
+        (function(i){
+
+            $cal[i].onclick = function(e){
+                console.log(i)
+            }
+            $cal[i].style.top = '225px'
+            $cal[i].style.left = '475px'
+
+        })(i)
+    }
+    var flagX = false
+    var flagY = false
+    var a = 225
+    var left = 475
+
+    setInterval(function(){
+        if(left<-25 || left>475){
+            flagX = !flagX
+        }
+        if(flagX){
+            left++
+        }else{
+            left--
+        }
+        if(a<-25 || a>475){
+            flagY = !flagY
+        }
+        if(flagY){
+            a++
+        }else{
+            a--
+        }
+
+        $cal[0].style.top = a + 'px'
+        $cal[0].style.left = left + 'px'
+
+    },10)
+
+</script>
+</html>
